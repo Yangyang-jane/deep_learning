@@ -1,0 +1,4 @@
+classes= 2
+train=D:\DL-GuPao\YOLO3\data\custom\train.txt
+valid=D:\DL-GuPao\YOLO3\data\custom\valid.txt
+names=D:\DL-GuPao\YOLO3\data\custom\classes.names

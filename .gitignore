@@ -150,3 +150,17 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+Detect/YOLO5/MaskDataSet/train/images/*.*
+Detect/YOLO5/MaskDataSet/train/labels/*.*
+Detect/YOLO5/MaskDataSet/valid/images/*.*
+Detect/YOLO5/MaskDataSet/valid/labels/*.*
+Detect/YOLO5/MaskDataSet/test/images/*.*
+Detect/YOLO5/MaskDataSet/test/labels/*.*
+
+Detect/YOLO7/NEU-DET/train/labels/*.*
+Detect/YOLO7/NEU-DET/valid/labels/*.*
+
+*.pdf
+*zip
+Detect/YOLO3/weights/*

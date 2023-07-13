@@ -1,0 +1,8 @@
+D:\DL-GuPao\YOLO3\data\custom\images\test1.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test2.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test3.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test4.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test5.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test6.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test7.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test8.jpg

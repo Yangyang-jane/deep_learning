@@ -1,0 +1,2 @@
+D:\DL-GuPao\YOLO3\data\custom\images\test9.jpg
+D:\DL-GuPao\YOLO3\data\custom\images\test10.jpg
