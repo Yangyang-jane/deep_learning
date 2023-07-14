@@ -28,7 +28,7 @@ class PositionEmbeddingSine(nn.Module):
     def forward(self, tensor_list: NestedTensor):
         x = tensor_list.tensors
         print(x.shape)
-        mask = tensor_list.mask
+        mask = tensor_list.mask # mask表示每个位置是实际特征还是padding出来的
         print(mask.shape)
         assert mask is not None
         not_mask = ~mask
@@ -36,14 +36,14 @@ class PositionEmbeddingSine(nn.Module):
         print(y_embed.shape)
         x_embed = not_mask.cumsum(2, dtype=torch.float32) #列方向累加
         print(x_embed.shape)
-        if self.normalize:
+        if self.normalize:# 归一化
             eps = 1e-6
             y_embed = y_embed / (y_embed[:, -1:, :] + eps) * self.scale
             x_embed = x_embed / (x_embed[:, :, -1:] + eps) * self.scale
 
         dim_t = torch.arange(self.num_pos_feats, dtype=torch.float32, device=x.device)
         print(dim_t.shape)
-        dim_t = self.temperature ** (2 * (dim_t // 2) / self.num_pos_feats)
+        dim_t = self.temperature ** (2 * (dim_t // 2) / self.num_pos_feats) # attention is all you need
         print(dim_t.shape)
         pos_x = x_embed[:, :, :, None] / dim_t
         print(pos_x.shape)

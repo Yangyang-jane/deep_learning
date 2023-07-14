@@ -158,7 +158,7 @@ class TransformerEncoderLayer(nn.Module):
                      src_mask: Optional[Tensor] = None,
                      src_key_padding_mask: Optional[Tensor] = None,
                      pos: Optional[Tensor] = None):
-        q = k = self.with_pos_embed(src, pos) #只有K和Q 加入了位置编码；并没有对V做？
+        q = k = self.with_pos_embed(src, pos) #只有K和Q 加入了位置编码；并没有对V做
         print(q.shape)
         src2 = self.self_attn(q, k, value=src, attn_mask=src_mask,
                               key_padding_mask=src_key_padding_mask)[0] #两个返回值：自注意力层的输出，自注意力权重；只需要第一个
@@ -227,15 +227,15 @@ class TransformerDecoderLayer(nn.Module):
                      memory_key_padding_mask: Optional[Tensor] = None,
                      pos: Optional[Tensor] = None,
                      query_pos: Optional[Tensor] = None):
-        q = k = self.with_pos_embed(tgt, query_pos)
+        q = k = self.with_pos_embed(tgt, query_pos)     # tgt是自己定义的query，第一轮全部为0
         print(q.shape)
         tgt2 = self.self_attn(q, k, value=tgt, attn_mask=tgt_mask,
-                              key_padding_mask=tgt_key_padding_mask)[0]
+                              key_padding_mask=tgt_key_padding_mask)[0]         #query先做self-attention
         print(tgt2.shape)
         tgt = tgt + self.dropout1(tgt2)
         tgt = self.norm1(tgt)
-        print(memory.shape)
-        tgt2 = self.multihead_attn(query=self.with_pos_embed(tgt, query_pos),
+        print(memory.shape)     #memory是encoder得到的做完self-attention和positionembedding的特征
+        tgt2 = self.multihead_attn(query=self.with_pos_embed(tgt, query_pos),       #encoder得到的特征作为key和value和decoder定义的query做注意力机制
                                    key=self.with_pos_embed(memory, pos),
                                    value=memory, attn_mask=memory_mask,
                                    key_padding_mask=memory_key_padding_mask)[0]
