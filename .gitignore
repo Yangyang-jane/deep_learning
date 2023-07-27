@@ -164,3 +164,7 @@ Detect/YOLO7/NEU-DET/valid/labels/*.*
 *.pdf
 *zip
 Detect/YOLO3/weights/*
+Detect/Ly/mig/*
+Detect/Ly/models/zchr5Net.pth
+Detect/Ly/P0.25_sm.txt
+Detect/Ly/zchr5_sm_imputed_data.txt
