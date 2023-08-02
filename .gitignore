@@ -168,3 +168,7 @@ Detect/Ly/mig/*
 Detect/Ly/models/zchr5Net.pth
 Detect/Ly/P0.25_sm.txt
 Detect/Ly/zchr5_sm_imputed_data.txt
+GAN/Stargan-v2/data/*
+GAN/Stargan-v2/assets/*
+GAN/Stargan-v2/100000_nets_ema.ckpt
+*.ckpt
