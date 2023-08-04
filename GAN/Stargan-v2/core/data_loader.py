@@ -195,8 +195,8 @@ class InputFetcher:
         x, y = self._fetch_inputs()
         if self.mode == 'train':
             x_ref, x_ref2, y_ref = self._fetch_refs()
-            z_trg = torch.randn(x.size(0), self.latent_dim)
-            z_trg2 = torch.randn(x.size(0), self.latent_dim)
+            z_trg = torch.randn(x.size(0), self.latent_dim)  # 为reference随机生成编码成长度为16的向量
+            z_trg2 = torch.randn(x.size(0), self.latent_dim)    # 同上，因为有ref1 和ref2
             inputs = Munch(x_src=x, y_src=y, y_ref=y_ref,
                            x_ref=x_ref, x_ref2=x_ref2,
                            z_trg=z_trg, z_trg2=z_trg2)

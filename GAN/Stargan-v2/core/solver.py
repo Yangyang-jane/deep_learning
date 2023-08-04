@@ -199,7 +199,7 @@ class Solver(nn.Module):
 
 
 def compute_d_loss(nets, args, x_real, y_org, y_trg, z_trg=None, x_ref=None, masks=None):
-    assert (z_trg is None) != (x_ref is None)
+    assert (z_trg is None) != (x_ref is None)   #X_real 为原图，y_org为原图的label。y_trg 为reference的label，z_trg 为reference随机生成的向量
     # with real images
     x_real.requires_grad_()
     out = nets.discriminator(x_real, y_org)
@@ -285,7 +285,7 @@ def r1_reg(d_out, x_in):
     grad_dout = torch.autograd.grad(
         outputs=d_out.sum(), inputs=x_in,
         create_graph=True, retain_graph=True, only_inputs=True
-    )[0]
+    )[0] # 输入是image，属于这一类的p
     grad_dout2 = grad_dout.pow(2)
     assert(grad_dout2.size() == x_in.size())
     reg = 0.5 * grad_dout2.view(batch_size, -1).sum(1).mean(0)

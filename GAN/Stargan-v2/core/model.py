@@ -207,7 +207,7 @@ class MappingNetwork(nn.Module):
                                             nn.ReLU(),
                                             nn.Linear(512, style_dim))]
 
-    def forward(self, z, y):
+    def forward(self, z, y):    # 使用随机生成的向量生成新的风格向量 16-64
         h = self.shared(z)
         out = []
         for layer in self.unshared:
