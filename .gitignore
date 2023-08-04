@@ -172,3 +172,4 @@ GAN/Stargan-v2/data/*
 GAN/Stargan-v2/assets/*
 GAN/Stargan-v2/100000_nets_ema.ckpt
 *.ckpt
+*.pth

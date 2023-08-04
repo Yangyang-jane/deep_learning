@@ -41,7 +41,7 @@ class Solver(nn.Module):
 
         if args.mode == 'train':
             self.optims = Munch()
-            for net in self.nets.keys():
+            for net in self.nets.keys(): # 初始化optim
                 if net == 'fan':
                     continue
                 self.optims[net] = torch.optim.Adam(
