@@ -108,8 +108,8 @@ if __name__ == '__main__':
                         help='Iterations to resume training/testing')
     parser.add_argument('--batch_size', type=int, default=4,
                         help='Batch size for training')  
-    parser.add_argument('--val_batch_size', type=int, default=32,
-                        help='Batch size for validation')
+    parser.add_argument('--val_batch_size', type=int, default=2,
+                        help='Batch size for validation')       # 验证时输出图片数
     parser.add_argument('--lr', type=float, default=1e-4,
                         help='Learning rate for D, E and G')
     parser.add_argument('--f_lr', type=float, default=1e-6,
@@ -120,8 +120,8 @@ if __name__ == '__main__':
                         help='Decay rate for 2nd moment of Adam')
     parser.add_argument('--weight_decay', type=float, default=1e-4,
                         help='Weight decay for optimizer')
-    parser.add_argument('--num_outs_per_domain', type=int, default=10,
-                        help='Number of generated images per domain during sampling')
+    parser.add_argument('--num_outs_per_domain', type=int, default=1,
+                        help='Number of generated images per domain during sampling') #采样生成的时候
 
     # misc
     parser.add_argument('--mode', type=str, required=True,
@@ -163,10 +163,10 @@ if __name__ == '__main__':
     parser.add_argument('--lm_path', type=str, default='expr/checkpoints/celeba_lm_mean.npz')
 
     # step size
-    parser.add_argument('--print_every', type=int, default=10)
-    parser.add_argument('--sample_every', type=int, default=5000)
-    parser.add_argument('--save_every', type=int, default=10000)
-    parser.add_argument('--eval_every', type=int, default=50000)
+    parser.add_argument('--print_every', type=int, default=1)
+    parser.add_argument('--sample_every', type=int, default=1)
+    parser.add_argument('--save_every', type=int, default=1)
+    parser.add_argument('--eval_every', type=int, default=1)
 
     args = parser.parse_args()
     main(args)

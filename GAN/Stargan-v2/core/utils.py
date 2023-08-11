@@ -62,13 +62,13 @@ def save_image(x, ncol, filename):
 @torch.no_grad()
 def translate_and_reconstruct(nets, args, x_src, y_src, x_ref, y_ref, filename):
     N, C, H, W = x_src.size()
-    s_ref = nets.style_encoder(x_ref, y_ref)
-    masks = nets.fan.get_heatmap(x_src) if args.w_hpf > 0 else None
-    x_fake = nets.generator(x_src, s_ref, masks=masks)
-    s_src = nets.style_encoder(x_src, y_src)
-    masks = nets.fan.get_heatmap(x_fake) if args.w_hpf > 0 else None
-    x_rec = nets.generator(x_fake, s_src, masks=masks)
-    x_concat = [x_src, x_ref, x_fake, x_rec]
+    s_ref = nets.style_encoder(x_ref, y_ref)        # 得到x_reference图像的y类风格编码
+    masks = nets.fan.get_heatmap(x_src) if args.w_hpf > 0 else None     #得到原图x_src的mask编码
+    x_fake = nets.generator(x_src, s_ref, masks=masks)      #原图x_src 转化为x_reference风格的fakeimage
+    s_src = nets.style_encoder(x_src, y_src)        #得到x_src图像的y类风格编码
+    masks = nets.fan.get_heatmap(x_fake) if args.w_hpf > 0 else None       #得到fakeimage的mask编码
+    x_rec = nets.generator(x_fake, s_src, masks=masks)      #将上面生成的fake image返回成原来的风格
+    x_concat = [x_src, x_ref, x_fake, x_rec]        # 将原图，风格图，fakeimage和返回的图拼接
     x_concat = torch.cat(x_concat, dim=0)
     save_image(x_concat, N, filename)
     del x_concat
@@ -84,12 +84,12 @@ def translate_using_latent(nets, args, x_src, y_trg_list, z_trg_list, psi, filen
     for i, y_trg in enumerate(y_trg_list):
         z_many = torch.randn(10000, latent_dim).to(x_src.device)
         y_many = torch.LongTensor(10000).to(x_src.device).fill_(y_trg[0])
-        s_many = nets.mapping_network(z_many, y_many)
+        s_many = nets.mapping_network(z_many, y_many)       # 随机生成的向量使用mapping network生成的风格向量
         s_avg = torch.mean(s_many, dim=0, keepdim=True)
         s_avg = s_avg.repeat(N, 1)
 
         for z_trg in z_trg_list:
-            s_trg = nets.mapping_network(z_trg, y_trg)
+            s_trg = nets.mapping_network(z_trg, y_trg) # 生成风格向量
             s_trg = torch.lerp(s_avg, s_trg, psi)
             x_fake = nets.generator(x_src, s_trg, masks=masks)
             x_concat += [x_fake]
@@ -105,7 +105,7 @@ def translate_using_reference(nets, args, x_src, x_ref, y_ref, filename):
     x_src_with_wb = torch.cat([wb, x_src], dim=0)
 
     masks = nets.fan.get_heatmap(x_src) if args.w_hpf > 0 else None
-    s_ref = nets.style_encoder(x_ref, y_ref)
+    s_ref = nets.style_encoder(x_ref, y_ref)        # 使用reference 图片得到reference的特征向量
     s_ref_list = s_ref.unsqueeze(1).repeat(1, N, 1)
     x_concat = [x_src_with_wb]
     for i, s_ref in enumerate(s_ref_list):

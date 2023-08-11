@@ -235,10 +235,13 @@ def compute_g_loss(nets, args, x_real, y_org, y_trg, z_trgs=None, x_refs=None, m
         s_trg = nets.mapping_network(z_trg, y_trg)
     else:
         s_trg = nets.style_encoder(x_ref, y_trg)
-
+    # advance loss
     x_fake = nets.generator(x_real, s_trg, masks=masks)
     out = nets.discriminator(x_fake, y_trg)
     loss_adv = adv_loss(out, 1)
+
+    # vessel loss 23.8.11
+    # loss_ves = F.cross_entropy(x_real[:,1],x_fake[:,1])
 
     # style reconstruction loss
     s_pred = nets.style_encoder(x_fake, y_trg)
@@ -259,13 +262,13 @@ def compute_g_loss(nets, args, x_real, y_org, y_trg, z_trgs=None, x_refs=None, m
     x_rec = nets.generator(x_fake, s_org, masks=masks)
     loss_cyc = torch.mean(torch.abs(x_rec - x_real))
 
+    # loss_ves * args.lambda_vel  # 23.8.11
     loss = loss_adv + args.lambda_sty * loss_sty \
         - args.lambda_ds * loss_ds + args.lambda_cyc * loss_cyc
     return loss, Munch(adv=loss_adv.item(),
                        sty=loss_sty.item(),
                        ds=loss_ds.item(),
                        cyc=loss_cyc.item())
-
 
 def moving_average(model, model_test, beta=0.999):
     for param, param_test in zip(model.parameters(), model_test.parameters()):

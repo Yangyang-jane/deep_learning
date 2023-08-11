@@ -60,12 +60,12 @@ def calculate_metrics(nets, args, step, mode):
             lpips_values = []
             print('Generating images and calculating LPIPS for %s...' % task)
             for i, x_src in enumerate(tqdm(loader_src, total=len(loader_src))):
-                N = x_src.size(0)
+                N = x_src.size(0)       # batch数
                 x_src = x_src.to(device)
                 y_trg = torch.tensor([trg_idx] * N).to(device)
                 masks = nets.fan.get_heatmap(x_src) if args.w_hpf > 0 else None
 
-                # generate 10 outputs from the same input
+                # generate （args.num_outs_per_domain） outputs from the same input
                 group_of_images = []
                 for j in range(args.num_outs_per_domain):
                     if mode == 'latent':
