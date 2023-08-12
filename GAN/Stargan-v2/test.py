@@ -139,7 +139,7 @@ if __name__ == '__main__':
                         help='Directory containing validation images')
     parser.add_argument('--sample_dir', type=str, default='expr/samples',
                         help='Directory for saving generated images')
-    parser.add_argument('--checkpoint_dir', type=str, default='expr/checkpoints',
+    parser.add_argument('--checkpoint_dir', type=str, default='expr/checkpoints/celeba_hq',
                         help='Directory for saving network checkpoints')
 
     # directory for calculating metrics
@@ -153,7 +153,7 @@ if __name__ == '__main__':
                         help='Directory containing input source images')
     parser.add_argument('--ref_dir', type=str, default='assets/representative/celeba_hq/ref',
                         help='Directory containing input reference images')
-    parser.add_argument('--inp_dir', type=str, default='assets/representative/custom/female',
+    parser.add_argument('--inp_dir', type=str, default='assets/representative/celeba_hq/female',
                         help='input directory when aligning faces')
     parser.add_argument('--out_dir', type=str, default='assets/representative/celeba_hq/src/female',
                         help='output directory when aligning faces')
