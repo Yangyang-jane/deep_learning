@@ -173,3 +173,8 @@ GAN/Stargan-v2/assets/*
 GAN/Stargan-v2/100000_nets_ema.ckpt
 *.ckpt
 *.pth
+*.JPEG
+GNN/data/*
+GNN/Mutagenicity/*
+MAE/dataset_200/*
+MAE/files/*
