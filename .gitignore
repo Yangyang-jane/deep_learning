@@ -177,3 +177,8 @@ GAN/Stargan-v2/100000_nets_ema.ckpt
 GNN/basic_knowledge/data/*
 MAE/dataset_200/*
 MAE/files/*
+GAN/Stargan-v2/expr/results/celeba_hq/reference.jpg
+*.dat
+*.pt
+GAN/Stargan-v2/expr/results/reference.jpg
+*.jpg

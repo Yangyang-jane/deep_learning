@@ -139,7 +139,7 @@ if __name__ == '__main__':
                         help='Directory containing validation images')
     parser.add_argument('--sample_dir', type=str, default='expr/samples',
                         help='Directory for saving generated images')
-    parser.add_argument('--checkpoint_dir', type=str, default='expr/checkpoints/celeba_hq',
+    parser.add_argument('--checkpoint_dir', type=str, default='expr/checkpoints/fundus',
                         help='Directory for saving network checkpoints')
 
     # directory for calculating metrics
@@ -149,13 +149,13 @@ if __name__ == '__main__':
     # directory for testing
     parser.add_argument('--result_dir', type=str, default='expr/results',
                         help='Directory for saving generated images and videos')
-    parser.add_argument('--src_dir', type=str, default='assets/representative/celeba_hq/src',
+    parser.add_argument('--src_dir', type=str, default='assets/representative/fundus/src',
                         help='Directory containing input source images')
-    parser.add_argument('--ref_dir', type=str, default='assets/representative/celeba_hq/ref',
+    parser.add_argument('--ref_dir', type=str, default='assets/representative/fundus/ref',
                         help='Directory containing input reference images')
-    parser.add_argument('--inp_dir', type=str, default='assets/representative/celeba_hq/female',
+    parser.add_argument('--inp_dir', type=str, default='assets/representative/fundus/female',
                         help='input directory when aligning faces')
-    parser.add_argument('--out_dir', type=str, default='assets/representative/celeba_hq/src/female',
+    parser.add_argument('--out_dir', type=str, default='assets/representative/fundus/src/female',
                         help='output directory when aligning faces')
 
     # face alignment

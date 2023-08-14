@@ -240,9 +240,6 @@ def compute_g_loss(nets, args, x_real, y_org, y_trg, z_trgs=None, x_refs=None, m
     out = nets.discriminator(x_fake, y_trg)
     loss_adv = adv_loss(out, 1)
 
-    # vessel loss 23.8.11
-    # loss_ves = F.cross_entropy(x_real[:,1],x_fake[:,1])
-
     # style reconstruction loss
     s_pred = nets.style_encoder(x_fake, y_trg)
     loss_sty = torch.mean(torch.abs(s_pred - s_trg))
