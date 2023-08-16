@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -5,39 +6,64 @@ from PIL import Image
 from skimage import data
 from skimage import data, color
 import matplotlib.pyplot as plt
+import random
+import pandas as pd
+
+def get_rgbhsv_from_img(pic_file):
+    img_bgr = cv2.imread(pic_file, cv2.IMREAD_COLOR)
+    img_hsv = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2HSV)
+    # 按R,G,B三个通道分别计算颜色直方图
+    r_hist = cv2.calcHist([img_bgr], [2], None, [25], [0, 255]).flatten().tolist()
+    g_hist = cv2.calcHist([img_bgr], [1], None, [25], [0, 255]).flatten().tolist()
+    b_hist = cv2.calcHist([img_bgr], [0], None, [25], [0, 255]).flatten().tolist()
+    # 按H,S,V三个通道分别计算颜色直方图
+    h_hist = cv2.calcHist([img_hsv], [0], None, [25], [0, 255]).flatten().tolist()
+    s_hist = cv2.calcHist([img_hsv], [1], None, [25], [0, 255]).flatten().tolist()
+    v_hist = cv2.calcHist([img_hsv], [2], None, [25], [0, 255]).flatten().tolist()
+
+    return r_hist+g_hist+b_hist+h_hist+s_hist+v_hist
+
+color_character = []
+for img_root in [r'D:\server_cs\ukb_original',r'D:\Topic\images\Color']:
+    img_list = random.sample(os.listdir(img_root),500)
+    for image in img_list:
+        img_path = os.path.join(img_root,image)
+        color_character.append([image]+get_rgbhsv_from_img(img_path))
+
+data = pd.DataFrame(color_character)
+data.to_csv('./ColorCha_500.csv')
+
+print(len(color_character[1]))
+quit()
 
 
-# img_bgr = cv2.imread(pic_file, cv2.IMREAD_COLOR)
-# img_hsv = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2HSV)
+
+
+pic_file = r'D:\deep_learning\GAN\Stargan-v2\data\fundus\train\ukb\1000468_21015_0_0.png'
+# m,dev = cv2.meanStdDev(img_hsv)  #计算H、V、S三通道的均值和方差
+
+'''显示三个通道的颜色直方图'''
+plt.plot(h_hist, label='H', color='blue')
+plt.plot(s_hist, label='S', color='green')
+plt.plot(v_hist, label='V', color='red')
+plt.legend(loc='best')
+plt.xlim([0, 256])
+plt.show()
+cv2.waitKey(0)
+
+
+
+quit()
+
+
+
 # cv2.namedWindow("input", cv2.WINDOW_GUI_NORMAL)
 # cv2.imshow("input", img_hsv)
-#
-# # 分别获取三个通道的ndarray数据
+
+# 分别获取三个通道的ndarray数据
 # img_h = img_hsv[:, :, 0]
 # img_s = img_hsv[:, :, 1]
 # img_v = img_hsv[:, :, 2]
-#
-# '''按H、S、V三个通道分别计算颜色直方图'''
-# h_hist = cv2.calcHist([img_hsv], [0], None, [256], [0, 255])
-# s_hist = cv2.calcHist([img_hsv], [1], None, [256], [0, 255])
-# v_hist = cv2.calcHist([img_hsv], [2], None, [256], [0, 255])
-# # m,dev = cv2.meanStdDev(img_hsv)  #计算H、V、S三通道的均值和方差
-#
-# '''显示三个通道的颜色直方图'''
-# plt.plot(h_hist, label='H', color='blue')
-# plt.plot(s_hist, label='S', color='green')
-# plt.plot(v_hist, label='V', color='red')
-# plt.legend(loc='best')
-# plt.xlim([0, 256])
-# plt.show()
-# cv2.waitKey(0)
-
-
-
-
-
-
-
 
 
 
@@ -52,7 +78,7 @@ import matplotlib.pyplot as plt
 plt.figure(num='wmu', figsize=(16, 8))  # 创建一个名为astronaut的窗口,并设置大小
 
 
-pic_file = r'D:\deep_learning\GAN\Stargan-v2\data\fundus\train\wmu\1093_OD_20.jpg'
+pic_file = r'D:\deep_learning\GAN\Stargan-v2\data\fundus\train\wmu\1099_OS_32.jpg'
 img_wmu = np.array(Image.open(pic_file))
 
 plt.subplot(2, 7, 1)  # 将窗口分为两行两列四个子图，则可显示四幅图片
@@ -92,7 +118,7 @@ plt.title("V channel")
 plt.axis('off')  # 不显示坐标尺寸
 
 # ukb
-pic_file = r'D:\deep_learning\GAN\Stargan-v2\data\fundus\train\ukb\1000468_21015_0_0.png'
+pic_file = r'D:\deep_learning\GAN\Stargan-v2\data\fundus\train\ukb\1004859_21016_0_0.png'
 img_ukb = np.array(Image.open(pic_file))
 
 plt.subplot(2, 7, 8)  # 将窗口分为两行两列四个子图，则可显示四幅图片

@@ -211,8 +211,8 @@ def compute_d_loss(nets, args, x_real, y_org, y_trg, z_trg=None, x_ref=None, mas
         if z_trg is not None:
             s_trg = nets.mapping_network(z_trg, y_trg)
         else:  # x_ref is not None
+            # s_trg = nets.style_encoder(x_ref, y_trg)
             s_trg = nets.style_encoder(x_ref, y_trg)
-
         x_fake = nets.generator(x_real, s_trg, masks=masks)
     out = nets.discriminator(x_fake, y_trg)
     loss_fake = adv_loss(out, 0)

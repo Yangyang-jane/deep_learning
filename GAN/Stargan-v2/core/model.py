@@ -223,8 +223,8 @@ class StyleEncoder(nn.Module):
         super().__init__()
         dim_in = 2**14 // img_size
         blocks = []
-        blocks += [nn.Conv2d(3, dim_in, 3, 1, 1)]
-
+        blocks += [nn.Conv2d(1, dim_in, 3, 1, 1)]   # 2023.8.15 in_channel,out,kernel
+        # blocks += [nn.Conv2d(3, dim_in, 3, 1, 1)]
         repeat_num = int(np.log2(img_size)) - 2
         for _ in range(repeat_num):
             dim_out = min(dim_in*2, max_conv_dim)
@@ -241,6 +241,7 @@ class StyleEncoder(nn.Module):
             self.unshared += [nn.Linear(dim_out, style_dim)]
 
     def forward(self, x, y):
+        x = (x[:,0]).unsqueeze(1)   # 2023.8.15
         h = self.shared(x)
         h = h.view(h.size(0), -1)
         out = []

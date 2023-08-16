@@ -139,7 +139,7 @@ if __name__ == '__main__':
                         help='Directory containing validation images')
     parser.add_argument('--sample_dir', type=str, default='expr/samples',
                         help='Directory for saving generated images')
-    parser.add_argument('--checkpoint_dir', type=str, default='expr/checkpoints/fundus',
+    parser.add_argument('--checkpoint_dir', type=str, default='expr/checkpoints/fundus/reg1+cyc1+sty1_red+ds1',
                         help='Directory for saving network checkpoints')
 
     # directory for calculating metrics
